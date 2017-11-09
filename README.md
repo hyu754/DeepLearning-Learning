@@ -1,6 +1,8 @@
 # TensorFlow mini problem
 This repo uses Andrew Ng's tensorflow [tutorial code](deeplearning.ai) for a general network.
 
+Most of the functions/utilities are from Andrew Ng's tutorials, I have just modified it to fit a general network with <img alt="$L$" src="svgs/ddcb483302ed36a59286424aa5e0be17.svg" align=middle width="11.14542pt" height="22.38192pt"/> layers, and the size of each layer <img alt="$n^[l]$" src="svgs/835af22ecc819595a832d512de4ddbe1.svg" align=middle width="24.13257pt" height="29.12679pt"/>
+
 ## Cost
 We use the cost function 
 
