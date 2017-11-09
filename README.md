@@ -1,5 +1,5 @@
 # TensorFlow mini problem
-This repo uses Andrew Ng's tensorflow [tutorial code]{deeplearning.ai} for a general network.
+This repo uses Andrew Ng's tensorflow [tutorial code](deeplearning.ai) for a general network.
 
 ## Cost
 We use the cost function 
