@@ -356,7 +356,7 @@ def model(X_train, Y_train, X_test, Y_test,layer_dims, learning_rate = 0.0001,  
         return parameters
 tf.reset_default_graph()
 X_train_orig, Y_train_orig, X_test_orig, Y_test_orig, classes = load_dataset()
-layer_array= [12288,45,22,6]
+layer_array= [12288,1000,1000,1000,1000,6]
 
 # Example of a picture
 index = 1020
