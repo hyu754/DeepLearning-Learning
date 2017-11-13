@@ -224,6 +224,34 @@ def forward_propagation(X, parameters,layer_dims):
     return Z_L
 
 
+def forward_propagation_for_predict(X, parameters):
+    """
+    Implements the forward propagation for the model: LINEAR -> RELU -> LINEAR -> RELU -> LINEAR -> SOFTMAX
+    
+    Arguments:
+    X -- input dataset placeholder, of shape (input size, number of examples)
+    parameters -- python dictionary containing your parameters "W1", "b1", "W2", "b2", "W3", "b3"
+                  the shapes are given in initialize_parameters
+
+    Returns:
+    Z3 -- the output of the last LINEAR unit
+    """
+    
+    # Retrieve the parameters from the dictionary "parameters" 
+    W1 = parameters['W1']
+    b1 = parameters['b1']
+    W2 = parameters['W2']
+    b2 = parameters['b2']
+    W3 = parameters['W3']
+    b3 = parameters['b3'] 
+                                                           # Numpy Equivalents:
+    Z1 = tf.add(tf.matmul(W1, X), b1)                      # Z1 = np.dot(W1, X) + b1
+    A1 = tf.nn.relu(Z1)                                    # A1 = relu(Z1)
+    Z2 = tf.add(tf.matmul(W2, A1), b2)                     # Z2 = np.dot(W2, a1) + b2
+    A2 = tf.nn.relu(Z2)                                    # A2 = relu(Z2)
+    Z3 = tf.add(tf.matmul(W3, A2), b3)                     # Z3 = np.dot(W3,Z2) + b3
+    
+    return Z3
 
 def compute_cost(Z_L, Y):
     """
@@ -354,40 +382,10 @@ def model(X_train, Y_train, X_test, Y_test,layer_dims, learning_rate = 0.0001,  
         print ("Test Accuracy:", accuracy.eval({X: X_test, Y: Y_test}))
         
         return parameters
+
+
 tf.reset_default_graph()
-X_train_orig, Y_train_orig, X_test_orig, Y_test_orig, classes = load_dataset()
-layer_array= [12288,1000,1000,1000,1000,6]
 
-# Example of a picture
-index = 1020
-#plt.imshow(X_train_orig[index])
-print ("y = " + str(np.squeeze(Y_train_orig[:, index])))
-
-
-# As usual you flatten the image dataset, then normalize it by dividing by 255. On top of that, you will convert each label to a one-hot vector as shown in Figure 1. Run the cell below to do so.
-
-# In[18]:
-
-# Flatten the training and test images
-X_train_flatten = X_train_orig.reshape(X_train_orig.shape[0], -1).T
-X_test_flatten = X_test_orig.reshape(X_test_orig.shape[0], -1).T
-# Normalize image vectors
-X_train = X_train_flatten/255.
-X_test = X_test_flatten/255.
-# Convert training and test labels to one hot matrices
-Y_train = convert_to_one_hot(Y_train_orig, 6)
-Y_test = convert_to_one_hot(Y_test_orig, 6)
-
-print ("number of training examples = " + str(X_train.shape[1]))
-print ("number of test examples = " + str(X_test.shape[1]))
-print ("X_train shape: " + str(X_train.shape))
-print ("Y_train shape: " + str(Y_train.shape))
-print ("X_test shape: " + str(X_test.shape))
-print ("Y_test shape: " + str(Y_test.shape))
-
-parameters = model(X_train, Y_train, X_test, Y_test,layer_array)
-
-np.save('parameters.npy',parameters)
 
 if(0):
     with tf.Session() as sess:

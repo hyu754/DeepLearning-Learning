@@ -91,7 +91,7 @@ def predict(X, parameters):
         
     return prediction
 
-def forward_propagation_for_predict(X, parameters):
+def forward_propagation_for_predict_old(X, parameters):
     """
     Implements the forward propagation for the model: LINEAR -> RELU -> LINEAR -> RELU -> LINEAR -> SOFTMAX
     
