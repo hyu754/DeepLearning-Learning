@@ -1,6 +1,6 @@
 import tensorflow as tf
 from tensorflow.python.framework import ops
-from tf_utils import load_dataset, random_mini_batches, convert_to_one_hot, predict
+from tf_utils import  random_mini_batches
 import numpy as np
 
 def cost(logits, labels):
@@ -223,7 +223,7 @@ def forward_propagation(X, parameters,layer_dims):
 
     return Z_L
 
-
+'''
 def forward_propagation_for_predict(X, parameters):
     """
     Implements the forward propagation for the model: LINEAR -> RELU -> LINEAR -> RELU -> LINEAR -> SOFTMAX
@@ -252,7 +252,7 @@ def forward_propagation_for_predict(X, parameters):
     Z3 = tf.add(tf.matmul(W3, A2), b3)                     # Z3 = np.dot(W3,Z2) + b3
     
     return Z3
-
+'''
 def compute_cost(Z_L, Y):
     """
     Computes the cost
@@ -381,26 +381,9 @@ def model(X_train, Y_train, X_test, Y_test,layer_dims, learning_rate = 0.0001,  
         print ("Train Accuracy:", accuracy.eval({X: X_train, Y: Y_train}))
         print ("Test Accuracy:", accuracy.eval({X: X_test, Y: Y_test}))
         
-        return parameters
+        return parameters, costs
 
 
 tf.reset_default_graph()
 
 
-if(0):
-    with tf.Session() as sess:
-        
-        X, Y = create_placeholders(12288, 6)
-        parameters = initialize_parameters(layer_array)
-        Z_L = forward_propagation(X, parameters,layer_array)
-
-        cost = compute_cost(Z_L, Y)
-        print("cost = " + str(cost))
-        layer_array= [12288,25,12,6]
-        X, Y = create_placeholders(12288, 6)
-        parameters = initialize_parameters()
-    with tf.Session() as sess:
-        parameters = initialize_parameters(layer_array)
-        for l in range(1,len(layer_array)):
-            print("W = " + str(parameters["W"+str(l)]))
-            print("b = " + str(parameters["b"+str(l)]))
