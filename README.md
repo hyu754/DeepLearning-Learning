@@ -23,14 +23,14 @@ The code uses one hot encoding, such that the vector <img alt="$[1,2,3,0,2,1]$" 
 
 Lets have a look at some of the parameters/formulats. 
 
--<img alt="$n_H^{l},n_W^{l},n_C^{l}$" src="svgs/c9b4154aedf24325855c2df7bb0f0a76.svg" align=middle width="81.686385pt" height="27.85299pt"/> - the height, width and number of channels for a given layer, <img alt="$l$" src="svgs/2f2322dff5bde89c37bcae4116fe20a8.svg" align=middle width="5.2088685pt" height="22.74591pt"/> .
+-<img alt="$n_H^{[l]},n_W^{[l]},n_C^{[l]}$" src="svgs/f52c9f937e82f5aa3bbe4621962e8d2d.svg" align=middle width="83.134095pt" height="34.27314pt"/> - the height, width and number of channels for a given layer, <img alt="$l$" src="svgs/2f2322dff5bde89c37bcae4116fe20a8.svg" align=middle width="5.2088685pt" height="22.74591pt"/> .
 
 -The output shape of a convolution regarding the input shape can be written as
 
 
-<p align="center"><img alt="$$n_H = \lfloor{\frac{n_H_{prev} - f + 2 \ times pad}{stride} \rfloor} +1$$" src="svgs/20dbee70e1cfe02a61f724a0545be98b.svg" align=middle width="271.1511pt" height="33.769395pt"/></p>
+<p align="center"><img alt="$$n_H = \lfloor{\frac{n_H_{prev} - f + 2 \times pad}{stride} \rfloor} +1$$" src="svgs/88eddbdc741c202ee16bb6a00ff4952e.svg" align=middle width="244.3716pt" height="33.769395pt"/></p>
 
-<p align="center"><img alt="$$n_W = \lfloor{\frac{n_W_{prev} - f + 2 \ times pad}{stride} \rfloor} +1$$" src="svgs/d062206edb5f1939cdc17d0880587e9e.svg" align=middle width="276.1242pt" height="33.769395pt"/></p>
+<p align="center"><img alt="$$n_W = \lfloor{\frac{n_W_{prev} - f + 2 \times pad}{stride} \rfloor} +1$$" src="svgs/2be0fd5596580ecfa71b87f9370ae580.svg" align=middle width="249.3447pt" height="33.769395pt"/></p>
 
 
 
