@@ -83,6 +83,16 @@ def main():
 		X_test_3d[:,:,:,2]=X_test
 		Y_train = Y_train.T
 		Y_test = Y_test.T
+		'''
+		Using layer structure from https://github.com/hwalsuklee/tensorflow-mnist-cnn
+		input layer : 784 nodes (MNIST images size)
+		first convolution layer : 5x5x32
+		first max-pooling layer
+		second convolution layer : 5x5x64
+		second max-pooling layer
+		third fully-connected layer : 1024 nodes
+		output layer : 10 nodes (number of class for MNIST)
+		'''
 
 
 	X_train = X_train_3d
@@ -120,12 +130,13 @@ def main():
 
 	CNN_layer_info={}
 	#First layer will c_prev = 3, c =8, f=4, s=1, padding='SAME', max_pool:8x8 filter, padding = 'same', activation :relu
-	CNN_layer_info["C1"] = {'layer_type':'CONV_RELU_MAXPOOL','channel':[3,8],'conv2d': [3, 1, 'SAME'],'max_pool': [8, 'SAME'],'activation': 'relu'}
-	CNN_layer_info["C2"] = {'layer_type':'CONV_RELU_MAXPOOL','channel':[8,16],'conv2d': [3, 1, 'SAME'],'max_pool': [8, 'SAME'],'activation': 'relu'}
-	CNN_layer_info["C3"] = {'layer_type':'CONV_RELU_MAXPOOL','channel':[16,32],'conv2d': [3, 1, 'SAME'],'max_pool': [8, 'SAME'],'activation': 'relu'}
+	CNN_layer_info["C1"] = {'layer_type':'CONV_RELU_MAXPOOL','channel':[3,32],'conv2d': [5, 1, 'SAME'],'max_pool': [8, 'SAME'],'activation': 'relu'}
+	CNN_layer_info["C2"] = {'layer_type':'CONV_RELU_MAXPOOL','channel':[32,64],'conv2d': [5, 1, 'SAME'],'max_pool': [8, 'SAME'],'activation': 'relu'}
+	#CNN_layer_info["C3"] = {'layer_type':'CONV_RELU_MAXPOOL','channel':[16,32],'conv2d': [3, 1, 'SAME'],'max_pool': [8, 'SAME'],'activation': 'relu'}
 
-	CNN_layer_info["C4"] = {'layer_type':'FLATTEN'}
-	CNN_layer_info["C5"] = {'layer_type':'FULLY_CONNECTED', 'neuron_size':10}
+	CNN_layer_info["C3"] = {'layer_type':'FLATTEN'}
+	#CNN_layer_info["C4"] = {'layer_type':'FULLY_CONNECTED', 'neuron_size':1024}
+	CNN_layer_info["C4"] = {'layer_type':'FULLY_CONNECTED', 'neuron_size':10}
 	#parameters=tf_CNN_wrapper.initialize_parameters(CNN_layer_info)
 	#print (parameters)
 

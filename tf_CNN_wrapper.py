@@ -118,6 +118,9 @@ def forward_propagation(X, parameters,CNN_layers):
             if(CNN_layers["C"+str(l)]['layer_type'] == 'FLATTEN'):
                 num_neuron = CNN_layers["C"+str(l+1)]['neuron_size']
                 Z_prev = tf.contrib.layers.fully_connected(P_prev,num_neuron,activation_fn=None)
+            elif(CNN_layers["C"+str(l)]['layer_type'] == 'FULLY_CONNECTED'):
+                num_neuron = CNN_layers["C"+str(l+1)]['neuron_size']
+                Z_prev = tf.contrib.layers.fully_connected(Z_prev,num_neuron,activation_fn=None)
 
     #  # CONV2D: filters W2, stride 1, padding 'SAME'
     # Z2 = tf.nn.conv2d(P1,W2,strides =[1,1,1,1],padding = 'SAME')
