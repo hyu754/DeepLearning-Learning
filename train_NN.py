@@ -28,13 +28,14 @@ except:
 try:
 	import tensorflow as tf
 	TENSORFLOW_EXIST = True
-	from tf_utils import convert_to_one_hot
-	import tf_utils
-	from tf_wrappers import model
+	
 except:
 	print ("tensorflow does not exist")
 
 import sys
+from tf_utils import convert_to_one_hot
+import tf_utils
+import tf_NN_wrapper
 
 
 '''''''''''''''''''''''''''''''''''''''''''''''
@@ -53,15 +54,16 @@ def main():
 	'''''''''''''''''''''''''''''''''''''''''''''''
 	'			Load data 						  '
 	'''''''''''''''''''''''''''''''''''''''''''''''
+
 	#All available data sets
 	data_sets=['sign_language','mnist']
 
 	data_use = 'mnist'
+	print ("Loading data set " + data_use +"...")
 	if(data_use == 'sign_language'):
 		X_train, Y_train, X_test, Y_test, classes = tf_utils.load_dataset_sign_language()
 	elif(data_use == 'mnist'):
 		X_train, Y_train, X_test, Y_test, classes = tf_utils.load_dataset_mnist()
-
 
 
 
@@ -71,7 +73,7 @@ def main():
 	'''''''''''''''''''''''''''''''''''''''''''''''
 	
 
-
+	print ("Pre-processing ...")
 	print ("number of training examples = " + str(X_train.shape[1]))
 	print ("number of test examples = " + str(X_test.shape[1]))
 	print ("X_train shape: " + str(X_train.shape))
@@ -90,6 +92,7 @@ def main():
 
 	#Specify number of layers
 
+	print("Training model ...")
 	layer_array= [X_train.shape[0],1000,1000,Y_train.shape[0]]
 
 	#Train the model
@@ -97,7 +100,7 @@ def main():
 	num_epoch = 1000
 	minibatch_size = 32
 
-	parameters,costs = model(
+	parameters,costs = tf_NN_wrapper.model(
 		X_train, 
 		Y_train, 
 		X_test, 
@@ -110,7 +113,7 @@ def main():
 		)
 
 	#write the parameters to file
-	np.save('parameters.npy',parameters)
+	np.save('parameters/NNparameters'+data_use+'.npy',parameters)
 
 	'''''''''''''''''''''''''''''''''''''''''''''''
 	'			Plot the  cost					  '
@@ -126,4 +129,4 @@ def main():
 
 
 if __name__ == "__main__":
-  main()
+	main()
