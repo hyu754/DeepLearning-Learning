@@ -188,6 +188,7 @@ def model(X_train, Y_train, X_test, Y_test,CNN_layers, learning_rate = 0.009,
     elif(len(X_train.shape) == 3):
         (m, n_H0, n_W0) = X_train.shape   
         n_C0=1     
+    (m, n_H0, n_W0, n_C0) = X_train.shape  
     n_y = Y_train.shape[1]       
 
     costs = []                                        # To keep track of the cost
