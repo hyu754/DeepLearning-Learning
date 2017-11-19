@@ -48,7 +48,6 @@ def initialize_parameters(CNN_layers):
             f = conv2d_info[0] 
             c_prev = channel_info[0]
             c = channel_info[1]
-
             parameters["W"+str(l+1)] = tf.get_variable("W"+str(l+1),[f,f,c_prev,c],initializer = tf.contrib.layers.xavier_initializer(seed =0),dtype = tf.float32)
     ### START CODE HERE ### (approx. 2 lines of code)
     #3W1 = tf.get_variable("W1",[4,4,3,8],initializer = tf.contrib.layers.xavier_initializer(seed =0),dtype = tf.float32)
@@ -116,11 +115,24 @@ def forward_propagation(X, parameters,CNN_layers):
 
         elif(CNN_layers["C"+str(l+1)]['layer_type'] == 'FULLY_CONNECTED'):
             if(CNN_layers["C"+str(l)]['layer_type'] == 'FLATTEN'):
-                num_neuron = CNN_layers["C"+str(l+1)]['neuron_size']
-                Z_prev = tf.contrib.layers.fully_connected(P_prev,num_neuron,activation_fn=None)
-            elif(CNN_layers["C"+str(l)]['layer_type'] == 'FULLY_CONNECTED'):
-                num_neuron = CNN_layers["C"+str(l+1)]['neuron_size']
-                Z_prev = tf.contrib.layers.fully_connected(Z_prev,num_neuron,activation_fn=None)
+                if(l==num_layer-1):
+                    num_neuron = CNN_layers["C"+str(l+1)]['neuron_size']
+                    Z_prev = tf.contrib.layers.fully_connected(P_prev,num_neuron,activation_fn=None)
+                    #Z_prev=tf.layers.dense(inputs=Z_prev, units=num_neuron, activation=tf.nn.relu)
+                else:
+                    num_neuron = CNN_layers["C"+str(l+1)]['neuron_size']
+                    #Z_prev = tf.contrib.layers.fully_connected(P_prev,num_neuron)
+                    Z_prev = tf.layers.dense(P_prev, num_neuron)
+            else:
+                
+                if(l==num_layer-1):
+                    num_neuron = CNN_layers["C"+str(l+1)]['neuron_size']
+                    Z_prev = tf.contrib.layers.fully_connected(Z_prev,num_neuron,activation_fn=None)
+                else:
+                    num_neuron = CNN_layers["C"+str(l+1)]['neuron_size']
+                    #Z_prev = tf.contrib.layers.fully_connected(Z_prev,num_neuron)
+                    Z_prev = tf.layers.dense(Z_prev, num_neuron)
+
 
     #  # CONV2D: filters W2, stride 1, padding 'SAME'
     # Z2 = tf.nn.conv2d(P1,W2,strides =[1,1,1,1],padding = 'SAME')
@@ -179,14 +191,15 @@ def model(X_train, Y_train, X_test, Y_test,CNN_layers, learning_rate = 0.009,
     test_accuracy -- real number, testing accuracy on the test set (X_test)
     parameters -- parameters learnt by the model. They can then be used to predict.
     """
-    
+    tf.reset_default_graph()
     ops.reset_default_graph()                         # to be able to rerun the model without overwriting tf variables
     tf.set_random_seed(1)                             # to keep results consistent (tensorflow seed)
     seed = 3                                          # to keep results consistent (numpy seed)
     if(len(X_train.shape) == 4):
         (m, n_H0, n_W0, n_C0) = X_train.shape  
     elif(len(X_train.shape) == 3):
-        (m, n_H0, n_W0) = X_train.shape   
+        #(m, n_H0, n_W0,n_C0) = X_train.shape   
+        
         n_C0=1     
     (m, n_H0, n_W0, n_C0) = X_train.shape  
     n_y = Y_train.shape[1]       
@@ -208,7 +221,7 @@ def model(X_train, Y_train, X_test, Y_test,CNN_layers, learning_rate = 0.009,
     #print (parameters)
     Z3 = forward_propagation(X, parameters,CNN_layers)
     ### END CODE HERE ###
-    
+    print (Z3)
     # Cost function: Add cost function to tensorflow graph
     ### START CODE HERE ### (1 line)
 
@@ -226,6 +239,9 @@ def model(X_train, Y_train, X_test, Y_test,CNN_layers, learning_rate = 0.009,
     # Start the session to compute the tensorflow graph
     with tf.Session() as sess:
         
+        #write graph
+        file_writer = tf.summary.FileWriter('logs', sess.graph)
+        file_writer.close()
         # Run the initialization
         sess.run(init)
         
@@ -235,7 +251,7 @@ def model(X_train, Y_train, X_test, Y_test,CNN_layers, learning_rate = 0.009,
             minibatch_cost = 0.
             num_minibatches = int(m / minibatch_size) # number of minibatches of size minibatch_size in the train set
             seed = seed + 1
-            minibatches = random_mini_batches_CNN(X_train, Y_train, minibatch_size, seed)
+            minibatches = random_mini_batches_CNN(X_train, Y_train,n_C0, minibatch_size, seed)
 
             for minibatch in minibatches:
 
@@ -273,8 +289,13 @@ def model(X_train, Y_train, X_test, Y_test,CNN_layers, learning_rate = 0.009,
         # Calculate accuracy on the test set
         accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
         print(accuracy)
-        train_accuracy = accuracy.eval({X: X_train, Y: Y_train})
-        test_accuracy = accuracy.eval({X: X_test, Y: Y_test})
+        X_train_small = X_train[0:7000, :]
+        Y_train_small = Y_train[0:7000]
+
+        X_test_small = X_test[0:1000,:]
+        Y_test_small = Y_test[0:1000]
+        train_accuracy = accuracy.eval({X: X_train_small, Y: Y_train_small})
+        test_accuracy = accuracy.eval({X: X_test_small, Y: Y_test_small})
         print("Train Accuracy:", train_accuracy)
         print("Test Accuracy:", test_accuracy)
         parameters = sess.run(parameters)

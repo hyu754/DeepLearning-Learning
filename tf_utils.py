@@ -103,7 +103,7 @@ def random_mini_batches_NN(X, Y, mini_batch_size = 64, seed = 0):
 
 
 
-def random_mini_batches_CNN(X, Y, mini_batch_size = 64, seed = 0):
+def random_mini_batches_CNN(X, Y,c, mini_batch_size = 64, seed = 0):
     """
     Creates a list of random minibatches from (X, Y)
     
@@ -118,25 +118,35 @@ def random_mini_batches_CNN(X, Y, mini_batch_size = 64, seed = 0):
     """
     
     m = X.shape[0]                  # number of training examples
+    #c = X.shape[3]                  #number of channels
     mini_batches = []
     np.random.seed(seed)
     
     # Step 1: Shuffle (X, Y)
     permutation = list(np.random.permutation(m))
-    shuffled_X = X[permutation,:,:,:]
+    if(c == 3):
+        shuffled_X = X[permutation,:,:,:]
+    elif(c==1):
+        shuffled_X = X[permutation,:]
     shuffled_Y = Y[permutation,:]
 
     # Step 2: Partition (shuffled_X, shuffled_Y). Minus the end case.
     num_complete_minibatches = math.floor(m/mini_batch_size) # number of mini batches of size mini_batch_size in your partitionning
     for k in range(0, num_complete_minibatches):
-        mini_batch_X = shuffled_X[k * mini_batch_size : k * mini_batch_size + mini_batch_size,:,:,:]
+        if(c==3):
+            mini_batch_X = shuffled_X[k * mini_batch_size : k * mini_batch_size + mini_batch_size,:,:,:]
+        elif(c==1):
+            mini_batch_X = shuffled_X[k * mini_batch_size : k * mini_batch_size + mini_batch_size,:]
         mini_batch_Y = shuffled_Y[k * mini_batch_size : k * mini_batch_size + mini_batch_size,:]
         mini_batch = (mini_batch_X, mini_batch_Y)
         mini_batches.append(mini_batch)
     
     # Handling the end case (last mini-batch < mini_batch_size)
     if m % mini_batch_size != 0:
-        mini_batch_X = shuffled_X[num_complete_minibatches * mini_batch_size : m,:,:,:]
+        if(c==3):
+            mini_batch_X = shuffled_X[num_complete_minibatches * mini_batch_size : m,:,:,:]
+        elif(c==1):
+            mini_batch_X = shuffled_X[num_complete_minibatches * mini_batch_size : m,:]
         mini_batch_Y = shuffled_Y[num_complete_minibatches * mini_batch_size : m,:]
         mini_batch = (mini_batch_X, mini_batch_Y)
         mini_batches.append(mini_batch)
