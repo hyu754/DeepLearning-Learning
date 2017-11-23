@@ -133,8 +133,9 @@ def main():
 
 	CNN_layer_info={}
 	#First layer will c_prev = 3, c =8, f=4, s=1, padding='SAME', max_pool:8x8 filter, padding = 'same', activation :relu
-	CNN_layer_info["C1"] = {'layer_type':'CONV_RELU_MAXPOOL','channel':[1,32],'conv2d': [5, 1, 'SAME'],'max_pool': [2, 'VALID'],'activation': 'relu'}
-	CNN_layer_info["C2"] = {'layer_type':'CONV_RELU_MAXPOOL','channel':[32,64],'conv2d': [3 ,1, 'SAME'],'max_pool': [2, 'VALID'],'activation': 'relu'}
+	CNN_layer_info["C1"] = {'layer_type':'CONV_RELU_MAXPOOL','channel':[1,32],'conv2d': [5, 1, 'SAME'],'max_pool': [2, 'SAME'],'activation': 'relu'}
+	CNN_layer_info["C2"] = {'layer_type':'CONV_RELU_MAXPOOL','channel':[32,64],'conv2d': [3 ,1, 'SAME'],'max_pool': [2, 'SAME'],'activation': 'relu'}
+	#CNN_layer_info["C3"] = {'layer_type':'CONV_RELU_MAXPOOL','channel':[64,124],'conv2d': [3 ,1, 'SAME'],'max_pool': [2, 'VALID'],'activation': 'relu'}
 	#CNN_layer_info["C3"] = {'layer_type':'CONV_RELU_MAXPOOL','channel':[32,120],'conv2d': [2, 1, 'VALID'],'max_pool': [2, 'SAME'],'activation': 'relu'}
 	#CNN_layer_info["C4"] = {'layer_type':'CONV_RELU_MAXPOOL','channel':[120,200],'conv2d': [2, 1, 'VALID'],'max_pool': [2, 'SAME'],'activation': 'relu'}
 	#CNN_layer_info["C5"] = {'layer_type':'CONV_RELU_MAXPOOL','channel':[64,120],'conv2d': [3, 1, 'VALID'],'max_pool': [2, 'VALID'],'activation': 'relu'}
