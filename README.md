@@ -6,30 +6,30 @@ This repo uses Andrew Ng's tensorflow [tutorial code](deeplearning.ai) for a ran
 
 Most of the functions/utilities are from Andrew Ng's tutorials, I have just modified it to fit a general network; where hyperparameters can be modified, namely, the number of layers (<img alt="$L$" src="svgs/ddcb483302ed36a59286424aa5e0be17.svg" align=middle width="11.14542pt" height="22.38192pt"/>), and the size of each layer (<img alt="$n^{[l]}$" src="svgs/8242f44bc9e80233af0d6944ea868001.svg" align=middle width="21.453465pt" height="29.12679pt"/>).
 
-To train a model, make your own 'load_data()' function in 'tf_utils.py'.
+To train a model, make your own `load_data()` function in `tf_utils.py`.
 
-After, to train your network, open 'train_NN.py'. 
+After, to train your network, open `train_NN.py`. 
 
-# Things to change
+### Things to change
 -Data loading function
-'''python
+```python
 
 def load_data():
 	#Load your data
 	return train_X, train_Y, test_X, test_Y, classes
-'''
+```
 
 -Layers information, the first and last layers' dimension is already defined. Below 'layer_array' specifies 3 Hidden units, with 20,10 and 10, neurons in each layer.
-'''python
+```python
 layer_array= [X_train.shape[0],20,10,10,Y_train.shape[0]]
-'''
+```
 
 -Specify tunable parameters
-'''python
+```python
 learning_rate = 0.00005
 num_epoch =10000
 minibatch_size = 32
-'''
+```
 
 
 
