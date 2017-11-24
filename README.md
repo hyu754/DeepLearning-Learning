@@ -19,7 +19,7 @@ def load_data():
 	return train_X, train_Y, test_X, test_Y, classes
 ```
 
--Layers information, the first and last layers' dimension is already defined. Below 'layer_array' specifies 3 Hidden units, with 20,10 and 10, neurons in each layer.
+-Layers information, the first and last layers' dimension is already defined. Below `layer_array` specifies 3 Hidden units, with 20,10 and 10, neurons in each layer.
 ```python
 layer_array= [X_train.shape[0],20,10,10,Y_train.shape[0]]
 ```
