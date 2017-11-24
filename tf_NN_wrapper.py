@@ -275,7 +275,7 @@ def model(X_train, Y_train, X_test, Y_test,layer_dims, learning_rate = 0.0001,  
                 epoch_cost += minibatch_cost / num_minibatches
 
             # Print the cost every epoch
-            if print_cost == True and epoch % 100 == 0:
+            if print_cost == True and epoch % 40 == 0:
                 print ("Cost after epoch %i: %f" % (epoch, epoch_cost))
             if print_cost == True and epoch % 5 == 0:
                 costs.append(epoch_cost)

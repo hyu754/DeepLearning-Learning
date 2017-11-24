@@ -1,10 +1,58 @@
 import h5py
 import numpy as np
-import tensorflow as tf
+try:
+    import tensorflow as tf
+    from tensorflow.examples.tutorials.mnist import input_data
+except:
+    print ("TF does not exist")
 import math
 
+import csv
 
-from tensorflow.examples.tutorials.mnist import input_data
+#loads data in csv format, one_hot_true = True : if the data is in one hot format
+def load_csv(file_name,delimiter_string,one_hot_true,num_category ,randomly_assign_train_test = True):
+    data_container = []
+    with open(file_name, 'rt',encoding='ascii') as csvfile:
+        data = csv.reader(csvfile, delimiter=delimiter_string)
+        print (data)
+        for row_ in data:
+            data_container.append(row_)
+    #print (data_container)
+    data_container = np.array(data_container)
+    
+    rows,cols = data_container.shape
+
+    Y = data_container[:,cols-num_category:cols]
+    Y = np.array(Y)
+
+    X = data_container[:,0:cols-num_category]
+
+    train_X=[]
+    train_Y=[]
+    test_X=[]
+    test_Y=[]
+
+    for i in range(0,rows):
+        if(np.random.rand()<0.8):
+            train_X.append(X[i,:])
+            train_Y.append(Y[i])
+        else:
+            test_X.append(X[i,:])
+            test_Y.append(Y[i])
+    classes=np.array(range(num_category)) 
+
+    train_X = np.array(train_X)
+    train_Y = np.array(train_Y)
+    test_X = np.array(test_X)
+    test_Y = np.array(test_Y)
+    print(train_X.shape)
+    print(test_X.shape)
+    train_X = train_X.T
+    train_Y = train_Y.T
+    test_X = test_X.T
+    test_Y = test_Y.T
+    return train_X, train_Y, test_X, test_Y, classes
+
 
 def load_dataset_mnist(flatten):
 
@@ -236,3 +284,7 @@ def ones(shape):
     ### END CODE HERE ###
     return ones
 
+
+
+if __name__ == "__main__":
+    load_csv("datasets/sampleMeatData.csv",",",True,3)

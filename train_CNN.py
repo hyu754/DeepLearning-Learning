@@ -58,7 +58,7 @@ def main():
 	'''''''''''''''''''''''''''''''''''''''''''''''
 
 	#All available data sets
-	data_sets=['sign_language','mnist']
+	data_sets=['sign_language','mnist','csv']
 
 	data_use = 'mnist'
 	print ("Loading data set " + data_use +"...")
@@ -87,6 +87,7 @@ def main():
 		X_test = X_test_3d
 
 		num_logits = 10
+
 		'''
 		Using layer structure from https://github.com/hwalsuklee/tensorflow-mnist-cnn
 		input layer : 784 nodes (MNIST images size)

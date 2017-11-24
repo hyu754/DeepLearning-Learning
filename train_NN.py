@@ -56,15 +56,16 @@ def main():
 	'''''''''''''''''''''''''''''''''''''''''''''''
 
 	#All available data sets
-	data_sets=['sign_language','mnist']
+	data_sets=['sign_language','mnist','csv']
 
-	data_use = 'mnist'
+	data_use = 'csv'
 	print ("Loading data set " + data_use +"...")
 	if(data_use == 'sign_language'):
 		X_train, Y_train, X_test, Y_test, classes = tf_utils.load_dataset_sign_language()
 	elif(data_use == 'mnist'):
-		X_train, Y_train, X_test, Y_test, classes = tf_utils.load_dataset_mnist()
-
+		X_train, Y_train, X_test, Y_test, classes = tf_utils.load_dataset_mnist(True)
+	elif(data_use == 'csv'):
+		X_train, Y_train, X_test, Y_test, classes = tf_utils.load_csv("datasets/sampleMeatData.csv",",",True,3)
 
 
 
@@ -93,12 +94,12 @@ def main():
 	#Specify number of layers
 
 	print("Training model ...")
-	layer_array= [X_train.shape[0],1000,1000,Y_train.shape[0]]
+	layer_array= [X_train.shape[0],800,500,100,50,Y_train.shape[0]]
 
 	#Train the model
-	learning_rate = 0.0001
-	num_epoch = 1000
-	minibatch_size = 32
+	learning_rate = 0.00005
+	num_epoch =10000
+	minibatch_size = 10
 
 	parameters,costs = tf_NN_wrapper.model(
 		X_train, 
